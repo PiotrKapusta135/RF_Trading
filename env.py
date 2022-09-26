@@ -4,4 +4,5 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-x = 5
+class Environment:
+    def __init__(self):
