@@ -15,9 +15,14 @@ class Environment:
         self.end = end
         self.total_steps = len(self.df)
         self.initial_balance = initial_balance
+        self.balance = initial_balance
+        self.prev_balance = 0
+        self.action_result = initial_balance - balance
         self.min_account_balance = 0
         self.min_transaction_value = 10
         self.total_fee = 0
+        self.trades_made = 0
+
 
         self.action_space = np.arange(0, 1, 0.01)
         self.observation_space = np.arange(0, self.window)
@@ -25,6 +30,13 @@ class Environment:
     def reset(self):
         self.balance = initial_balance
         self.performance = performance
+        self.total_fee = 0
+        self.prev_balance = initial_balance
+        self.action_result = 0
+        self.trades_made = 0
+        self.current_step = 0
+
+
 
 
 
