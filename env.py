@@ -29,6 +29,9 @@ class Environment:
         self.crypto_sold = 0
         self.crypto_held = 0
         self.trading_fee = 0.05
+        self.max_steps = 200
+        self.total_reward = 0
+        self.nb_of_steps = 0
 
         self.action_space = np.arange(0, 1, 0.01)
         self.observation_space = np.arange(0, self.window)
@@ -40,7 +43,9 @@ class Environment:
         self.total_fee = 0
         self.net_worth = initial_balance
         self.trades_made = 0
+        self.total_reward = 0
         self.max_net_worth = self.net_worth
+        self.nb_of_steps = 0
         self.starting_step = random.randint(0, len(self.df.loc[:].values - self.window))
         self.current_step = self.starting_step
         for i in reversed(range(self.window)):
@@ -87,7 +92,20 @@ class Environment:
         self.net_worth = self.usd_balance + self.crypto_balance
         if self.net_worth > self.max_net_worth:
             self.max_net_worth = self.net_worth
-            # Reward + 1?
+            reward = 1
+        else:
+            reward = 0
+        self.current_step += 1
+        self.nb_of_steps += 1
+
+        if self.nb_of_steps >= self.max_steps:
+            done = True
+        elif self.total_reward/self.nb_of_steps < self.min_performance:
+            done = True
+
+        state = self.get_state()
+
+        return state, reward, done
 
 
 
