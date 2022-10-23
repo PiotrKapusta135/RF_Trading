@@ -32,6 +32,7 @@ class Environment:
         self.max_steps = 200
         self.total_reward = 0
         self.nb_of_steps = 0
+        self.current_step = random.randint(0, len(self.df.loc[:].values - self.window))
 
         self.action_space = np.arange(0, 1, 0.01)
         self.observation_space = np.arange(0, self.window)
